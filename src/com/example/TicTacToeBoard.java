@@ -7,6 +7,10 @@ import java.util.Locale;
  */
 public class TicTacToeBoard {
   private String ticTacToeBoard;
+  /**
+   * In order to test different board sizes change the constant board size to a perfect square that is greater than 9.
+   * If an invalid board size is inputted then an Illegal Argument Exception will be thrown.
+   */
   private final int BOARD_SIZE = 9;
   /**
    * This method should load a string into your TicTacToeBoard class.
@@ -21,14 +25,14 @@ public class TicTacToeBoard {
    * @return an enum value corresponding to the board evaluation
    */
   public Evaluation evaluate() {
-    if (ticTacToeBoard = null) {
+    if (ticTacToeBoard == null) {
       throw new NullPointerException("The board that was inputted is null!");
     }
     /**
      * Checks if the Board Size is a perfect square so that it is n*n allowing me to make sure
      * that I can do all the necessary row and column checks. 
      */
-    if ((Math.sqrt(BOARD_SIZE) - Math.floor(Math.sqrt(BOARD_SIZE))) != 0) {
+    if ((Math.sqrt(BOARD_SIZE) - Math.floor(Math.sqrt(BOARD_SIZE))) != 0 && Math.sqrt(BOARD_SIZE) > 3) {
       throw new IllegalArgumentException("Board Size must be a perfect square i.e. 4, 9, 16,...");
     }
     /**

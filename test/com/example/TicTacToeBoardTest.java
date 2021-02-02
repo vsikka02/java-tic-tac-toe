@@ -23,6 +23,18 @@ public class TicTacToeBoardTest {
     assertEquals(Evaluation.UnreachableState, board.evaluate());
   }
 
+  @Test(expected = IllegalArgumentException.class)
+  public void testNullBoard() {
+    TicTacToeBoard board = new TicTacToeBoard(null);
+    board.evaluate();
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testInvalidBoardLength() {
+    TicTacToeBoard board = new TicTacToeBoard("X.o..!foXoX");
+    board.evaluate();
+  }
+
   @Test
   public void testValidBoardXDiagonalWins() {
     TicTacToeBoard board = new TicTacToeBoard("X!!OxO.OX");
@@ -71,18 +83,7 @@ public class TicTacToeBoardTest {
     assertEquals(Evaluation.Owins, board.evaluate());
   }
 
-  @Test(expected = IllegalArgumentException.class)
-  public void testNullBoard() {
-    TicTacToeBoard board = new TicTacToeBoard(null);
-    board.evaluate();
-  }
-
-  @Test(expected = IllegalArgumentException.class)
-  public void testInvalidBoardLength() {
-    TicTacToeBoard board = new TicTacToeBoard("X.o..!foXoX");
-    board.evaluate();
-  }
-
+  /** Test 5 By 5 Boards to prove the extensibility of my code. */
   @Test
   public void testValid5By5BoardXColumnWins() {
     TicTacToeBoard board = new TicTacToeBoard("XO...X.O..XO...X...OX..O.");
@@ -131,6 +132,7 @@ public class TicTacToeBoardTest {
     assertEquals(Evaluation.Owins, board.evaluate());
   }
 
+  /** Begin Testing on 4 By 4 Boards to prove Extensibility. */
   @Test
   public void testValid4By4BoardXColumnWins() {
     TicTacToeBoard board = new TicTacToeBoard("O!XO()X(o*X&%%Xo");

@@ -171,13 +171,13 @@ public class TicTacToeBoardTest {
 
   @Test
   public void testValid4By4ODiagonalWins() {
-    TicTacToeBoard board = new TicTacToeBoard("O;x;:OccppOxxFpO");
+    TicTacToeBoard board = new TicTacToeBoard("O%x;:Oc$ppOxx>pO");
     assertEquals(Evaluation.Owins, board.evaluate());
   }
 
   @Test
   public void testValid4By4OAntiDiagonalWins() {
-    TicTacToeBoard board = new TicTacToeBoard("xx.O::O:POxPO*xi");
+    TicTacToeBoard board = new TicTacToeBoard("xx(O**O:&OxPO^xi");
     assertEquals(Evaluation.Owins, board.evaluate());
   }
 }

@@ -2,6 +2,8 @@ package com.example;
 
 import com.sun.xml.internal.ws.streaming.TidyXMLStreamReader;
 import org.junit.Test;
+import sun.util.resources.cldr.vi.TimeZoneNames_vi;
+
 import static org.junit.Assert.assertEquals;
 
 public class TicTacToeBoardTest {
@@ -103,5 +105,77 @@ public class TicTacToeBoardTest {
   public void testValid5by5BoardXAntiDiagonalWins() {
     TicTacToeBoard board = new TicTacToeBoard("1234X1O3X512X4O1X3O5X2O45");
     assertEquals(Evaluation.Xwins, board.evaluate());
+  }
+
+  @Test
+  public void testValid5By5BoardORowWins() {
+    TicTacToeBoard board = new TicTacToeBoard("X!X!!!X!!!12345OOOOO***XX");
+    assertEquals(Evaluation.Owins, board.evaluate());
+  }
+
+  @Test
+  public void testValid5By5BoardOColumnWins() {
+    TicTacToeBoard board = new TicTacToeBoard("wwwOxyxyO!123O$x2%Ox!@#Ox");
+    assertEquals(Evaluation.Owins, board.evaluate());
+  }
+
+  @Test
+  public void testValid5By5BoardODiagonalWins() {
+    TicTacToeBoard board = new TicTacToeBoard("o@@X@xo#x#&&ox*^^^o!%x%%O");
+    assertEquals(Evaluation.Owins, board.evaluate());
+  }
+
+  @Test
+  public void testValid5By5BoardOAntiDiagonalWins() {
+    TicTacToeBoard board = new TicTacToeBoard("1234O1x3O512O4x1O3x5O2x45");
+    assertEquals(Evaluation.Owins, board.evaluate());
+  }
+
+  @Test
+  public void testValid4By4BoardXColumnWins() {
+    TicTacToeBoard board = new TicTacToeBoard("O!XO()X(o*X&%%Xo");
+    assertEquals(Evaluation.Xwins, board.evaluate());
+  }
+
+  @Test
+  public void testValid4By4BoardXRowWins() {
+    TicTacToeBoard board = new TicTacToeBoard("o...*o*oxxxx///o");
+    assertEquals(Evaluation.Xwins, board.evaluate());
+  }
+
+  @Test
+  public void testValid4By4BoardXDiagonalWins() {
+    TicTacToeBoard board = new TicTacToeBoard("X;o;:XccppXooFpX");
+    assertEquals(Evaluation.Xwins, board.evaluate());
+  }
+
+  @Test
+  public void testValid4By4BoardXAntiDiagonalWins() {
+    TicTacToeBoard board = new TicTacToeBoard("OO.x::X:PXoPX*oi");
+    assertEquals(Evaluation.Xwins, board.evaluate());
+  }
+
+  @Test
+  public void testValid4By4BoardOColumnWins() {
+    TicTacToeBoard board = new TicTacToeBoard("9O(x8ox)xO(){O}|");
+    assertEquals(Evaluation.Owins, board.evaluate());
+  }
+
+  @Test
+  public void testValid4By4BoardORowWins() {
+    TicTacToeBoard board = new TicTacToeBoard("#x#xOoOo0123x23x");
+    assertEquals(Evaluation.Owins, board.evaluate());
+  }
+
+  @Test
+  public void testValid4By4ODiagonalWins() {
+    TicTacToeBoard board = new TicTacToeBoard("O;x;:OccppOxxFpO");
+    assertEquals(Evaluation.Owins, board.evaluate());
+  }
+
+  @Test
+  public void testValid4By4OAntiDiagonalWins() {
+    TicTacToeBoard board = new TicTacToeBoard("xx.O::O:POxPO*xi");
+    assertEquals(Evaluation.Owins, board.evaluate());
   }
 }

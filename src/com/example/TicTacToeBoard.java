@@ -2,93 +2,104 @@ package com.example;
 
 import java.util.Locale;
 
-/**
- * Takes in and evaluates a string representing a tic tac toe board.
- */
+/** Takes in and evaluates a string representing a tic tac toe board. */
 public class TicTacToeBoard {
   private String ticTacToeBoard;
   /**
-   * In order to test different board sizes change the constant board size to a perfect square that is greater than 9.
-   * If an invalid board size is inputted then an Illegal Argument Exception will be thrown.
+   * In order to test different board sizes change the constant board size to a perfect square that
+   * is greater than 9. If an invalid board size is inputted then an Illegal Argument Exception will
+   * be thrown.
    */
-  private final int BOARD_SIZE = 9;
+  private int boardSize;
   /**
    * This method should load a string into your TicTacToeBoard class.
+   *
    * @param board The string representing the board
    */
   public TicTacToeBoard(String board) {
+    if (board == null) {
+      throw new IllegalArgumentException("The board that was passed through is null!");
+    }
     ticTacToeBoard = board;
+    boardSize = board.length();
   }
 
   /**
    * Checks the state of the board (unreachable, no winner, X wins, or O wins)
+   *
    * @return an enum value corresponding to the board evaluation
    */
   public Evaluation evaluate() {
-    if (ticTacToeBoard == null) {
-      throw new NullPointerException("The board that was inputted is null!");
-    }
     /**
-     * Checks if the Board Size is a perfect square so that it is n*n allowing me to make sure
-     * that I can do all the necessary row and column checks. 
+     * Checks if the Board Size is a perfect square so that it is n*n allowing me to make sure that
+     * I can do all the necessary row and column checks.
      */
-    if ((Math.sqrt(BOARD_SIZE) - Math.floor(Math.sqrt(BOARD_SIZE))) != 0 && Math.sqrt(BOARD_SIZE) > 3) {
+    if ((Math.sqrt(boardSize) - Math.floor(Math.sqrt(boardSize))) != 0
+        && Math.sqrt(boardSize) > 3) {
       throw new IllegalArgumentException("Board Size must be a perfect square i.e. 4, 9, 16,...");
     }
     /**
-     * Checks to make sure the board that is passed through is the intended size in this case it is declared by the constant BOARD_SIZE and must be a perfect square.
-     * For this test we are strictly using BOARD_SIZE = 9.
+     * Checks to make sure the board that is passed through is the intended size in this case it is
+     * declared by the length of the original String and must be a perfect square. For most tests,
+     * we use boardSize = 9.
      */
-    if (ticTacToeBoard.length() != BOARD_SIZE) {
+    if (ticTacToeBoard.length() != boardSize) {
       throw new IllegalArgumentException("Board is not the intended board size!");
     }
-    /**
-     * Ensures that our Tic Tac Toe String is not case-sensitive.
-     */
+    /** Ensures that our Tic Tac Toe String is not case-sensitive. */
     ticTacToeBoard = ticTacToeBoard.toUpperCase();
+    /**
+     * Switches String TicTacToe Board into a 2D char array that resembles a real TicTacToeBoard.
+     */
     int charCounter = 0;
-    char[][] charTicTacToeBoard = new char[(int) Math.sqrt(BOARD_SIZE)][(int) Math.sqrt(BOARD_SIZE)];
-    for (int i = 0; i < Math.sqrt(BOARD_SIZE); i++) {
-      for (int j = 0; j < Math.sqrt(BOARD_SIZE); j++) {
-        charTicTacToeBoard[i][j] = ticTacToeBoard.charAt(charCounter);
+    char[][] charTicTacToeBoard = new char[(int) Math.sqrt(boardSize)][(int) Math.sqrt(boardSize)];
+    for (int row = 0; row < Math.sqrt(boardSize); row++) {
+      for (int column = 0; column < Math.sqrt(boardSize); column++) {
+        charTicTacToeBoard[row][column] = ticTacToeBoard.charAt(charCounter);
         charCounter++;
       }
     }
     /**
-     * Simply count the number of X's and O's in the board to check whether there is a possible winner or not.
+     * Simply count the number of X's and O's in the board to check whether there is a possible
+     * winner or not.
      */
     int countX = 0;
     int countO = 0;
-    for (int i = 0; i < Math.sqrt(BOARD_SIZE); i++) {
-      for (int j = 0; j < Math.sqrt(BOARD_SIZE); j++) {
-        if (charTicTacToeBoard[i][j] == 'X') {
+    for (int row = 0; row < Math.sqrt(boardSize); row++) {
+      for (int column = 0; column < Math.sqrt(boardSize); column++) {
+        if (charTicTacToeBoard[row][column] == 'X') {
           countX++;
         }
-        if (charTicTacToeBoard[i][j] == 'O') {
+        if (charTicTacToeBoard[row][column] == 'O') {
           countO++;
         }
       }
     }
-    /**
-     * Ensure that the number of X's and O's only differs by one to be considered a valid game.
-     */
+    /** Ensure that the number of X's and O's only differs by one to be considered a valid game. */
     if (Math.abs(countX - countO) > 1) {
       return Evaluation.UnreachableState;
     }
     boolean xWinner = false;
     boolean oWinner = false;
     char[][] transposedTicTacToeBoard = transposeArray(charTicTacToeBoard);
-    for (int i = 0; i < Math.sqrt(BOARD_SIZE); i++) {
-      if (checkRowsAndColumnHelper(charTicTacToeBoard[i], 'X')) {
+    /**
+     * Split up the TicTacToe board by row and pass it into the checkRows helper function in order
+     */
+    for (int row = 0; row < Math.sqrt(boardSize); row++) {
+      if (checkRows(charTicTacToeBoard[row], 'X')) {
         xWinner = true;
       }
-      if (checkRowsAndColumnHelper(charTicTacToeBoard[i], 'O')) {
+      if (checkRows(charTicTacToeBoard[row], 'O')) {
         oWinner = true;
       }
-      if (checkRowsAndColumnHelper(transposedTicTacToeBoard[i], 'X')) {
+      /**
+       * Transpose the TicTacToeBoard and check the rows for winners which will act as the columns
+       * in the original TicTacToe Board.
+       */
+      if (checkRows(transposedTicTacToeBoard[row], 'X')) {
         xWinner = true;
       }
-      if (checkRowsAndColumnHelper(transposedTicTacToeBoard[i], 'O')) {
+      if (checkRows(transposedTicTacToeBoard[row], 'O')) {
         oWinner = true;
       }
     }
@@ -98,6 +109,10 @@ public class TicTacToeBoard {
     if (checkDiagonals(charTicTacToeBoard, 'O')) {
       oWinner = true;
     }
+    /**
+     * Ensures that there is no double winner for TicTacToe making it an Unreachable State.
+     * Otherwise if there is one winner it will return the Evaluation.
+     */
     if (xWinner && oWinner) {
       return Evaluation.UnreachableState;
     } else if (xWinner) {
@@ -108,28 +123,51 @@ public class TicTacToeBoard {
 
     return Evaluation.NoWinner;
   }
-  public boolean checkRowsAndColumnHelper (char[] ticTacToeRow, char character) {
-    for (int i = 0; i < ticTacToeRow.length; i++) {
-      if (ticTacToeRow[i] != character) {
+
+  /**
+   * @param ticTacToeRow Takes in individual rows of a TicTacToe board and analyzes
+   * @param character
+   * @return
+   */
+  private boolean checkRows(char[] ticTacToeRow, char character) {
+    for (int rowIndex = 0; rowIndex < ticTacToeRow.length; rowIndex++) {
+      if (ticTacToeRow[rowIndex] != character) {
         return false;
       }
     }
     return true;
   }
-  public char[][] transposeArray (char[][] ticTacToeBoard) {
-    char[][] transposedTicTacToeBoard = new char[(int) Math.sqrt(BOARD_SIZE)][(int) Math.sqrt(BOARD_SIZE)];
-    for (int i = 0; i < transposedTicTacToeBoard.length; i++) {
-      for (int j = 0; j < transposedTicTacToeBoard.length; j++) {
-        transposedTicTacToeBoard[i][j] = ticTacToeBoard[j][i];
+
+  /**
+   * Transpose the array in order to check the columns by using the checkRows helper function above.
+   *
+   * @param ticTacToeBoard a 2D char array that represents the original TicTacToe board.
+   * @return a transposed 2D char array that is the transposed TicTacToe board.
+   */
+  private char[][] transposeArray(char[][] ticTacToeBoard) {
+    char[][] transposedTicTacToeBoard =
+        new char[(int) Math.sqrt(boardSize)][(int) Math.sqrt(boardSize)];
+    for (int row = 0; row < transposedTicTacToeBoard.length; row++) {
+      for (int column = 0; column < transposedTicTacToeBoard.length; column++) {
+        transposedTicTacToeBoard[row][column] = ticTacToeBoard[column][row];
       }
     }
     return transposedTicTacToeBoard;
   }
-  public boolean checkDiagonals(char[][] ticTacToeBoard, char character) {
+
+  /**
+   * This is a helper function that is utilized to check the diagonal and anti-diagonal of the
+   * TicTacToe board.
+   *
+   * @param ticTacToeBoard the 2D char array that represents a TicTacToe board.
+   * @param character the character that is being searched for on the diagonals.
+   * @return boolean of whether there is a winner present.
+   */
+  private boolean checkDiagonals(char[][] ticTacToeBoard, char character) {
     boolean diagonalWin1 = true;
     boolean diagonalWin2 = true;
     for (int i = 0; i < ticTacToeBoard.length; i++) {
-      if(ticTacToeBoard[i][i] != character) {
+      if (ticTacToeBoard[i][i] != character) {
         diagonalWin1 = false;
       }
       if (ticTacToeBoard[i][ticTacToeBoard.length - i - 1] != character) {

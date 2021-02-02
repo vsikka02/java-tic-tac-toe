@@ -19,7 +19,7 @@ public class TicTacToeBoard {
 
   public TicTacToeBoard(String board) {
     if (board == null) {
-      throw new IllegalArgumentException("The board that was passed through is null!");
+      throw new IllegalArgumentException("The board that was inputted is null!");
     }
     ticTacToeBoard = board;
     boardSize = board.length();

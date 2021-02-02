@@ -31,7 +31,7 @@ public class TicTacToeBoardTest {
 
   @Test(expected = IllegalArgumentException.class)
   public void testInvalidBoardLength() {
-    TicTacToeBoard board = new TicTacToeBoard("X.o..!foXoX");
+    TicTacToeBoard board = new TicTacToeBoard("X.o@.!foXoX");
     board.evaluate();
   }
 

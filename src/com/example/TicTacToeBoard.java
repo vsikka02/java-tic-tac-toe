@@ -137,7 +137,8 @@ public class TicTacToeBoard {
   }
 
   /**
-   * Transpose the array in order to check the columns by using the checkRows helper function above.
+   * Transpose the array in order to check the columns by using the checkRows helper function above
+   * by inputting a transposed 2D character array instead of the original.
    *
    * @param ticTacToeBoard a 2D char array that represents the original TicTacToe board.
    * @return a transposed 2D char array that is the transposed TicTacToe board.
@@ -155,11 +156,11 @@ public class TicTacToeBoard {
 
   /**
    * This is a helper function that is utilized to check the diagonal and anti-diagonal of the
-   * TicTacToe board.
+   * TicTacToe board for a winner given a certain character.
    *
    * @param ticTacToeBoard the 2D char array that represents a TicTacToe board.
-   * @param character the character that is being searched for on the diagonals.
-   * @return boolean of whether there is a winner present.
+   * @param character the character that is being searched for in the diagonals.
+   * @return boolean of whether there is a winner present in either the diagonal or anti-diagonal.
    */
   private boolean checkDiagonals(char[][] ticTacToeBoard, char character) {
     boolean diagonalWin1 = true;

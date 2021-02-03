@@ -6,9 +6,9 @@ import java.util.Locale;
 public class TicTacToeBoard {
   private String ticTacToeBoard;
   /**
-   * In order to test different board sizes change the constant board size to a perfect square that
-   * is greater than 9. If an invalid board size is inputted then an Illegal Argument Exception will
-   * be thrown.
+   * In order to test different board sizes simply input a String with the length of a
+   * perfect square that is greater than or equal to 9. If an invalid board size is inputted
+   * then an Illegal Argument Exception will be thrown.
    */
   private int boardSize;
   /**
@@ -39,7 +39,7 @@ public class TicTacToeBoard {
       throw new IllegalArgumentException("Board Size must be a perfect square i.e. 4, 9, 16,...");
     }
 
-    /* Checks to make sure the board that is passed through is the intended size in this case it is
+    /* Checks to make sure the board that is passed through is a valid size in this case it is
      * declared by the length of the original String and must be a perfect square. For most tests,
      * we use boardSize = 9. */
     if (ticTacToeBoard.length() != boardSize) {
@@ -60,7 +60,7 @@ public class TicTacToeBoard {
     }
 
     /*Count the number of X's and O's in the board to check whether there is
-     a possible winner or not. */
+     a possible winner or not.*/
     int countX = 0;
     int countO = 0;
     for (int row = 0; row < Math.sqrt(boardSize); row++) {
